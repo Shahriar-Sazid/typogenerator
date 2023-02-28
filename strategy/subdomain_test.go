@@ -20,7 +20,7 @@ package strategy_test
 import (
 	"testing"
 
-	"zntr.io/typogenerator/strategy"
+	"Shahriar-Sazid/typogenerator/strategy"
 )
 
 func TestSubdomain(t *testing.T) {

@@ -26,9 +26,9 @@ import (
 	"github.com/namsral/flag"
 	"golang.org/x/net/idna"
 
-	"zntr.io/typogenerator"
-	"zntr.io/typogenerator/mapping"
-	"zntr.io/typogenerator/strategy"
+	"Shahriar-Sazid/typogenerator"
+	"Shahriar-Sazid/typogenerator/mapping"
+	"Shahriar-Sazid/typogenerator/strategy"
 )
 
 var (

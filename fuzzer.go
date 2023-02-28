@@ -20,7 +20,7 @@ package typogenerator
 import (
 	"github.com/weppos/publicsuffix-go/publicsuffix"
 
-	"zntr.io/typogenerator/strategy"
+	"Shahriar-Sazid/typogenerator/strategy"
 )
 
 // FuzzResult represents permutations results

@@ -20,7 +20,7 @@ package strategy
 import (
 	"fmt"
 
-	"zntr.io/typogenerator/helpers"
+	"Shahriar-Sazid/typogenerator/helpers"
 )
 
 var Homoglyph Strategy

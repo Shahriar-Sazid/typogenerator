@@ -20,8 +20,8 @@ package strategy_test
 import (
 	"testing"
 
-	"zntr.io/typogenerator/mapping"
-	"zntr.io/typogenerator/strategy"
+	"Shahriar-Sazid/typogenerator/mapping"
+	"Shahriar-Sazid/typogenerator/strategy"
 )
 
 func TestReplace(t *testing.T) {

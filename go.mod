@@ -1,4 +1,4 @@
-module zntr.io/typogenerator
+module Shahriar-Sazid/typogenerator
 
 go 1.17
 
