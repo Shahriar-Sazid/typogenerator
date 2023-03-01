@@ -15,12 +15,25 @@
 // specific language governing permissions and limitations
 // under the License.
 
-package typogenerator
+package main
 
 import (
-	"github.com/weppos/publicsuffix-go/publicsuffix"
+	"fmt"
+	"log"
+	"os"
 
+	"github.com/hduplooy/gocsv"
+	"github.com/namsral/flag"
+	"github.com/weppos/publicsuffix-go/publicsuffix"
+	"golang.org/x/net/idna"
+
+	"Shahriar-Sazid/typogenerator/mapping"
 	"Shahriar-Sazid/typogenerator/strategy"
+)
+
+var (
+	input           = flag.String("s", "mymensingh", "Defines string to alternate")
+	permutationOnly = flag.Bool("p", true, "Display permutted domain only")
 )
 
 // FuzzResult represents permutations results
@@ -76,4 +89,51 @@ func fuzz(domain, tld string, strategies ...strategy.Strategy) ([]FuzzResult, er
 	}
 
 	return res, err
+}
+
+func init() {
+	flag.Parse()
+}
+
+func main() {
+	all := []strategy.Strategy{
+		strategy.DoubleHit(mapping.English),
+		strategy.VowelSwap,
+		strategy.Similar(mapping.English),
+		strategy.Omission,
+		strategy.Transposition,
+		strategy.Repetition,
+		strategy.Replace(mapping.English),
+	}
+
+	results, err := Fuzz(*input, all...)
+	if err != nil {
+		log.Fatal("Unable to generate domains.")
+	}
+
+	if !*permutationOnly {
+		writer := gocsv.NewWriter(os.Stdout)
+		writer.QuoteFields = true
+		defer writer.Flush()
+
+		// Write headers
+		if err := writer.Write([]string{"strategy", "domain", "permunation", "idna"}); err != nil {
+			panic(err)
+		}
+
+		for _, r := range results {
+			for _, p := range r.Permutations {
+				puny, _ := idna.ToASCII(p)
+				if err := writer.Write([]string{r.StrategyName, r.Domain, p, puny}); err != nil {
+					panic(err)
+				}
+			}
+		}
+	} else {
+		for _, r := range results {
+			for _, p := range r.Permutations {
+				fmt.Println(p)
+			}
+		}
+	}
 }
